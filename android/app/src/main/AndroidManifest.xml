@@ -26,6 +26,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.anonymous.BitriseReactNativeDetoxSample"/>
         <data android:scheme="exp+bitrise-reactnative-detox-sample"/>
+        <data android:scheme="io.bitrise.BitriseReactNativeDetoxSample"/>
       </intent-filter>
     </activity>
   </application>

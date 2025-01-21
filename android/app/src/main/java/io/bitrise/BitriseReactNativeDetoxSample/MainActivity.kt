@@ -1,4 +1,4 @@
-package com.anonymous.BitriseReactNativeDetoxSample
+package io.bitrise.BitriseReactNativeDetoxSample
 
 import android.os.Build
 import android.os.Bundle

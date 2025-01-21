@@ -31,15 +31,14 @@ workflows:
             #!/bin/bash
             npx expo prebuild
 
-    - xcode-build-for-test@3:
+    - script@1:
+        title: Start Metro Bundler
         inputs:
-        - project_path: $BITRISE_PROJECT_PATH
-        - scheme: $BITRISE_SCHEME
-        - export_method: development
-        - xcodebuild_options: CODE_SIGNING_ALLOWED=NO
-        - configuration: Debug
-        - destination: generic/platform=iOS Simulator,name=iPhone 16,OS=latest
-    
+        - content: |-
+            #!/bin/bash
+            npx expo start &
+            sleep 10  # Give Metro some time to start up
+            
     - script@1:
         title: Detox Build iOS
         inputs:

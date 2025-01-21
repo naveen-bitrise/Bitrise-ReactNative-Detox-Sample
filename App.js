@@ -15,13 +15,17 @@ export default function App() {
   };
 
   const removeTodo = (id) => {
+    console.log('Removing todo with id:', id);
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
   const renderTodo = ({ item, index }) => (
     <TouchableOpacity
       style={styles.todoItem}
-      onPress={() => removeTodo(item.id)}
+      onPress={() => {
+        console.log('TouchableOpacity pressed for todo:', item);
+        removeTodo(item.id)
+      }}
       testID={`todo-${index}`}
     >
       <Text>{item.text}</Text>
@@ -104,5 +108,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    width: '100%',  // Ensure full width
+    flexDirection: 'row',  // Layout children in a row
+    alignItems: 'center'   // Center items vertically
   },
 });

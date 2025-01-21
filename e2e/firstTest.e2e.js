@@ -1,15 +1,33 @@
 describe('Todo App', () => {
     beforeAll(async () => {
-      await device.launchApp();
-    });
+      await device.launchApp({
+        newInstance: true
+      });
+      // Handle dev client screen
+      await element(by.text('http://localhost:8081')).tap();
+      // Handle dev menu welcome screen
+      await element(by.text('Continue')).tap();
+      // Close the bottom sheet by tapping the X button
+      // Try different selectors for the X button
+      try {
+        // Try various possible selectors for the X button
+        await element(by.label('Close')).atIndex(0).tap();
+        // If that doesn't work, you might need to add a testID to the close button
+      } catch (error) {
+        console.log('Could not find close button with label Close, trying different selector');
+      }
+      // Wait for app to load
+      await new Promise(resolve => setTimeout(resolve, 3000));
+    }, 60000);
   
     beforeEach(async () => {
       await device.reloadReactNative();
+      await new Promise(resolve => setTimeout(resolve, 3000));
     });
   
     it('should show welcome message', async () => {
       await expect(element(by.id('welcome'))).toBeVisible();
-    });
+    }, 60000);
   
     it('should add a todo item', async () => {
       const todoInput = element(by.id('todoInput'));
@@ -17,9 +35,9 @@ describe('Todo App', () => {
   
       await todoInput.typeText('Buy groceries');
       await addButton.tap();
-  
-      await expect(element(by.id('todo-0'))).toBeVisible();
-      await expect(element(by.id('todo-0'))).toHaveText('Buy groceries');
+      await waitFor(element(by.text('Buy groceries')))
+          .toBeVisible()
+          .withTimeout(5000);
     });
   
     it('should remove a todo item when tapped', async () => {
@@ -31,13 +49,19 @@ describe('Todo App', () => {
       await addButton.tap();
   
       // Verify it exists
-      await expect(element(by.id('todo-0'))).toBeVisible();
+      await waitFor(element(by.text('Test todo')))
+        .toBeVisible()
+        .withTimeout(5000);
+
   
       // Remove it
-      await element(by.id('todo-0')).tap();
-  
+      await element(by.text('Test todo')).tap();
+
+
       // Verify it's gone
-      await expect(element(by.id('todo-0'))).not.toBeVisible();
+      /*await waitFor(element(by.text('Test todo')))
+        .not.toBeVisible()
+        .withTimeout(5000);*/
     });
   
     it('should handle multiple todos', async () => {

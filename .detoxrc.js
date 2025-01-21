@@ -8,6 +8,8 @@ module.exports = {
     jest: {
       setupTimeout: 120000,
       teardownTimeout: 120000,
+      reportSpecs: true,
+      reportWorkerAssign: true,
     },
   },
   apps: {
@@ -30,6 +32,7 @@ module.exports = {
       type: 'ios.simulator',
       device: {
         type: 'iPhone 16',
+        os: 'iOS 18.2'
       },
     },
     emulator: {
