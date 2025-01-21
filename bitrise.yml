@@ -43,14 +43,14 @@ workflows:
         inputs:
         - content: |-
             #!/bin/bash
-            npm run test:e2e:build
+            npm run test:e2e:build:ios
 
     - script@1:
         title: Detox Test iOS
         inputs:
         - content: |-
             #!/bin/bash
-            npm run test:e2e
+            npm run test:e2e:ios
 
     - cache-push@2: {}
 
