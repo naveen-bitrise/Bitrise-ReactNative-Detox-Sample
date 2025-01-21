@@ -31,7 +31,7 @@ workflows:
             #!/bin/bash
             npx expo prebuild
 
-    - xcode-archive@4:
+    - xcode-archive@5:
         inputs:
         - project_path: $BITRISE_PROJECT_PATH
         - scheme: $BITRISE_SCHEME
