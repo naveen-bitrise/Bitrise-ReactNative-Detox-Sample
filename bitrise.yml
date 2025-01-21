@@ -31,13 +31,15 @@ workflows:
             #!/bin/bash
             npx expo prebuild
 
-    - xcode-archive@5:
+    - xcode-build-for-test@3:
         inputs:
         - project_path: $BITRISE_PROJECT_PATH
         - scheme: $BITRISE_SCHEME
         - export_method: development
+        - xcodebuild_options: CODE_SIGNING_ALLOWED=NO
         - configuration: Debug
-
+        - destination: generic/platform=iOS Simulator,name=iPhone 16,OS=latest
+    
     - script@1:
         title: Detox Build iOS
         inputs:
