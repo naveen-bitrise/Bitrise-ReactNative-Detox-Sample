@@ -1,0 +1,118 @@
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+workflows:
+  ios:
+    steps:
+    - git-clone@8: {}
+    - cache-pull@2: {}
+
+    - npm@1:
+        inputs:
+        - command: install
+        title: npm install
+
+    - npm@1:
+        title: Install Expo CLI
+        inputs:
+        - command: install -g expo-cli
+
+    - script@1:
+        title: Install CocoaPods
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd ios && pod install
+
+    - script@1:
+        title: Create Expo Dev Build
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npx expo prebuild
+
+    - xcode-archive@4:
+        inputs:
+        - project_path: $BITRISE_PROJECT_PATH
+        - scheme: $BITRISE_SCHEME
+        - export_method: development
+        - configuration: Debug
+
+    - script@1:
+        title: Detox Build iOS
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npm run test:e2e:build
+
+    - script@1:
+        title: Detox Test iOS
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npm run test:e2e
+
+    - cache-push@2: {}
+
+  android:
+    steps:
+    - git-clone@8: {}
+    - cache-pull@2: {}
+
+    - npm@1:
+        inputs:
+        - command: install
+        title: npm install
+
+    - npm@1:
+        title: Install Expo CLI
+        inputs:
+        - command: install -g expo-cli
+
+    - script@1:
+        title: Create Expo Dev Build
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npx expo prebuild
+
+    - install-missing-android-tools@3:
+        inputs:
+        - gradlew_path: $PROJECT_LOCATION/gradlew
+
+    - android-build@1:
+        inputs:
+        - project_location: $PROJECT_LOCATION
+        - module: app
+        - variant: debug
+
+    - script@1:
+        title: Detox Build Android
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npm run test:e2e:build:android
+
+    - script@1:
+        title: Detox Test Android
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npm run test:e2e:android
+
+    - cache-push@2: {}
+
+app:
+  envs:
+  # iOS
+  - BITRISE_PROJECT_PATH: ios/BitriseReactNativeDetoxSample.xcworkspace
+  - BITRISE_SCHEME: BitriseReactNativeDetoxSample
+  # Android
+  - PROJECT_LOCATION: android
+  - BITRISE_APK_PATH: android/app/build/outputs/apk/debug/app-debug.apk
+  - ANDROID_HOME: /opt/android-sdk
+  - JAVA_HOME: /usr/local/opt/openjdk@11
+
+meta:
+  bitrise.io:
+    stack: osx-xcode-16.2.x
