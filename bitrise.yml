@@ -166,8 +166,8 @@ workflows:
             printenv
             echo "BITRISE_EMULATOR_SERIAL: $BITRISE_EMULATOR_SERIAL"
             $ANDROID_SDK_ROOT/platform-tools/adb devices -l
-            $ANDROID_SDK_ROOT/platform-tools/adb devices -s "$$BITRISE_EMULATOR_SERIAL" emu avd name
-            $ANDROID_SDK_ROOT/platform-tools/adb devices -s "$$BITRISE_EMULATOR_SERIAL" emu avd id
+            $ANDROID_SDK_ROOT/platform-tools/adb devices -s "$BITRISE_EMULATOR_SERIAL" emu avd name
+            $ANDROID_SDK_ROOT/platform-tools/adb devices -s "$BITRISE_EMULATOR_SERIAL" emu avd id
 
   
 app:
