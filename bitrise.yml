@@ -144,6 +144,24 @@ workflows:
         - android_home: $ANDROID_SDK_ROOT
 
     - script@1:
+        title: Test App Installation
+        inputs:
+        - content: |-
+            #!/bin/bash
+            echo "=== Installing APK ==="
+            $ANDROID_SDK_ROOT/platform-tools/adb -s "$BITRISE_EMULATOR_SERIAL" install -r android/app/build/outputs/apk/debug/app-debug.apk
+            
+            echo "=== Installing Test APK ==="
+            $ANDROID_SDK_ROOT/platform-tools/adb -s "$BITRISE_EMULATOR_SERIAL" install -r android/app/build/outputs/apk/debug/app-debug-androidTest.apk
+            
+            echo "=== App Package Info ==="
+            $ANDROID_SDK_ROOT/platform-tools/adb -s "$BITRISE_EMULATOR_SERIAL" shell pm list packages | grep bitrise
+
+            echo "=== Starting App ==="
+            $ANDROID_SDK_ROOT/platform-tools/adb -s "$BITRISE_EMULATOR_SERIAL" shell am start -n io.bitrise.BitriseReactNativeDetoxSample/io.bitrise.BitriseReactNativeDetoxSample.MainActivity
+
+
+    - script@1:
         title: Detox Test Android
         inputs:
         - content: |-
