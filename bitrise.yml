@@ -164,8 +164,8 @@ workflows:
             #!/bin/bash
             printenv
             echo "BITRISE_EMULATOR_SERIAL: $BITRISE_EMULATOR_SERIAL"
-            $ANDROID_HOME/platform-tools/adb devices -l
-            $ANDROID_HOME/tools/bin/avdmanager list avd
+            $ANDROID_SDK_ROOT/platform-tools/adb devices -l
+            $ANDROID_SDK_ROOT/tools/bin/avdmanager list avd
 
   
 app:
