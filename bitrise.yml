@@ -152,6 +152,7 @@ workflows:
         inputs:
         - api_level: "30"
         - profile: pixel_4
+        - emulator_id: Pixel_4_API_30
 
     - wait-for-android-emulator@1: 
         inputs:
@@ -165,7 +166,6 @@ workflows:
             printenv
             echo "BITRISE_EMULATOR_SERIAL: $BITRISE_EMULATOR_SERIAL"
             $ANDROID_SDK_ROOT/platform-tools/adb devices -l
-            $ANDROID_SDK_ROOT/tools/bin/avdmanager list avd
 
   
 app:
