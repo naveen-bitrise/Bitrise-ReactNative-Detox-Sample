@@ -157,6 +157,16 @@ workflows:
         inputs:
         - android_home: $ANDROID_SDK_ROOT
 
+    - script@1:
+        title: Debug Emulator Info
+        inputs:
+        - content: |-
+            #!/bin/bash
+            printenv
+            echo "BITRISE_EMULATOR_SERIAL: $BITRISE_EMULATOR_SERIAL"
+            $ANDROID_HOME/platform-tools/adb devices -l
+            $ANDROID_HOME/tools/bin/avdmanager list avd
+
   
 app:
   envs:
