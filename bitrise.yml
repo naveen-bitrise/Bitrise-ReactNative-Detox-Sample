@@ -125,7 +125,7 @@ workflows:
             npx expo start &
             sleep 10  # Give Metro some time to start up
 
-    - avd-manager@1:
+    - avd-manager@2:
         inputs:
         - api_level: "30"
         - profile: pixel_4
@@ -141,6 +141,19 @@ workflows:
 
     - cache-push@2: {}
 
+  test:
+    meta:
+        bitrise.io:
+            stack: linux-docker-android-22.04
+    steps:
+    - avd-manager@2:
+        inputs:
+        - api_level: "30"
+        - profile: pixel_4
+
+    - wait-for-android-emulator@1: {}
+
+  
 app:
   envs:
   # iOS
