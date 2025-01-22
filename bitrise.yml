@@ -90,7 +90,7 @@ workflows:
         - project_location: $PROJECT_LOCATION
         - module: app
         - variant: debugAndroidTest
-        - build_type: debug
+        - build_type: apk
     
     - script@1:
         title: Start Metro Bundler
