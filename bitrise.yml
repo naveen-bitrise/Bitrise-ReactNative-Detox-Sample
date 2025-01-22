@@ -3,6 +3,9 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
   ios:
+    meta:
+        bitrise.io:
+            stack: osx-xcode-16.2.x
     steps:
     - git-clone@8: {}
     - cache-pull@2: {}
@@ -56,6 +59,9 @@ workflows:
     - cache-push@2: {}
 
   android:
+    meta:
+        bitrise.io:
+            stack: linux-docker-android-20.04
     steps:
     - git-clone@8: {}
     - cache-pull@2: {}
@@ -91,6 +97,25 @@ workflows:
         - module: app
         - variant: debugAndroidTest
         - build_type: apk
+
+    - script@1:
+    title: Copy APK for Detox
+    inputs:
+    - content: |-
+        #!/bin/bash
+        # Ensure directory exists
+        mkdir -p android/app/build/outputs/apk/debug
+        
+        # Copy APK to Detox expected location
+        cp "$BITRISE_DEPLOY_DIR/app-debug-androidTest.apk" "android/app/build/outputs/apk/debug/app-debug.apk"
+        
+        # Verify file exists
+        if [ -f "android/app/build/outputs/apk/debug/app-debug.apk" ]; then
+          echo "APK copied to expected location"
+        else
+          echo "Failed to copy APK"
+          exit 1
+        fi
     
     - script@1:
         title: Start Metro Bundler
