@@ -98,6 +98,13 @@ workflows:
         - variant: debug
         - build_type: apk
 
+    - android-build@1:
+        inputs:
+        - project_location: $PROJECT_LOCATION
+        - module: app
+        - variant: debugAndroidTest
+        - build_type: apk
+
     - script@1:
         title: Copy APK for Detox
         inputs:
@@ -108,13 +115,14 @@ workflows:
             
             # Copy APK to Detox expected location
             cp "$BITRISE_DEPLOY_DIR/app-debug.apk" "android/app/build/outputs/apk/debug/app-debug.apk"
+            cp "$BITRISE_DEPLOY_DIR/app-debug-androidTest.apk" "android/app/build/outputs/apk/debug/app-debug-androidTest.apk"
             
-            # Verify file exists
-            if [ -f "android/app/build/outputs/apk/debug/app-debug.apk" ]; then
-            echo "APK copied to expected location"
+            # Verify both files exist
+            if [ -f "android/app/build/outputs/apk/debug/app-debug.apk" ] && [ -f "android/app/build/outputs/apk/debug/app-debug-androidTest.apk" ]; then
+                echo "Both APKs copied to expected location"
             else
-            echo "Failed to copy APK"
-            exit 1
+                echo "Failed to copy one or both APKs"
+                exit 1
             fi
     
     - script@1:
