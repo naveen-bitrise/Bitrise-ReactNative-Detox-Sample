@@ -151,7 +151,9 @@ workflows:
         - api_level: "30"
         - profile: pixel_4
 
-    - wait-for-android-emulator@1: {}
+    - wait-for-android-emulator@1: 
+        inputs:
+        - android_home: $ANDROID_SDK_ROOT
 
   
 app:
