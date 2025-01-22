@@ -16,12 +16,12 @@ module.exports = {
     'ios.debug': {
       type: 'ios.app',
       binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/BitriseReactNativeDetoxSample.app',
-      build: 'xcodebuild -workspace ios/BitriseReactNativeDetoxSample.xcworkspace -scheme BitriseReactNativeDetoxSample -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
+      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug --stacktrace',
     },
     'android.debug': {
       type: 'android.apk',
       binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
-      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug',
+      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug --stacktrace',
       reversePorts: [
         8081
       ],

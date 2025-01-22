@@ -10,12 +10,12 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		28BFDB6538B8427E9BCE5B87 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6722DF8E5A4547E5A219A4E6 /* noop-file.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		89A934FADA7C4C9C9FDE656B /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2983BBEA381435F97D71911 /* noop-file.swift */; };
+		849DBD75B38353EF0C93654E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7582345F42E0F6EFFDE1106B /* PrivacyInfo.xcprivacy */; };
 		96905EF65AED1B983A6B3ABC /* libPods-BitriseReactNativeDetoxSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-BitriseReactNativeDetoxSample.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C171C1C30777DA975AD07896 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2F4313A8AC5769156AF664AE /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,14 +25,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BitriseReactNativeDetoxSample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BitriseReactNativeDetoxSample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BitriseReactNativeDetoxSample/main.m; sourceTree = "<group>"; };
-		2F4313A8AC5769156AF664AE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = BitriseReactNativeDetoxSample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		577016A75C3A4D0A86C9062C /* BitriseReactNativeDetoxSample-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "BitriseReactNativeDetoxSample-Bridging-Header.h"; path = "BitriseReactNativeDetoxSample/BitriseReactNativeDetoxSample-Bridging-Header.h"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-BitriseReactNativeDetoxSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BitriseReactNativeDetoxSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6722DF8E5A4547E5A219A4E6 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "BitriseReactNativeDetoxSample/noop-file.swift"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-BitriseReactNativeDetoxSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitriseReactNativeDetoxSample.debug.xcconfig"; path = "Target Support Files/Pods-BitriseReactNativeDetoxSample/Pods-BitriseReactNativeDetoxSample.debug.xcconfig"; sourceTree = "<group>"; };
+		73B72BEB0EC94BCDA638DABF /* BitriseReactNativeDetoxSample-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "BitriseReactNativeDetoxSample-Bridging-Header.h"; path = "BitriseReactNativeDetoxSample/BitriseReactNativeDetoxSample-Bridging-Header.h"; sourceTree = "<group>"; };
+		7582345F42E0F6EFFDE1106B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = BitriseReactNativeDetoxSample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-BitriseReactNativeDetoxSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitriseReactNativeDetoxSample.release.xcconfig"; path = "Target Support Files/Pods-BitriseReactNativeDetoxSample/Pods-BitriseReactNativeDetoxSample.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = BitriseReactNativeDetoxSample/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C2983BBEA381435F97D71911 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "BitriseReactNativeDetoxSample/noop-file.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-BitriseReactNativeDetoxSample/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,9 +59,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				C2983BBEA381435F97D71911 /* noop-file.swift */,
-				577016A75C3A4D0A86C9062C /* BitriseReactNativeDetoxSample-Bridging-Header.h */,
-				2F4313A8AC5769156AF664AE /* PrivacyInfo.xcprivacy */,
+				6722DF8E5A4547E5A219A4E6 /* noop-file.swift */,
+				73B72BEB0EC94BCDA638DABF /* BitriseReactNativeDetoxSample-Bridging-Header.h */,
+				7582345F42E0F6EFFDE1106B /* PrivacyInfo.xcprivacy */,
 			);
 			name = BitriseReactNativeDetoxSample;
 			sourceTree = "<group>";
@@ -147,13 +147,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BitriseReactNativeDetoxSample" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				5CBB8D17023E2FDC21B1EA9B /* [Expo] Configure project */,
+				AA5B194884342ED1BA5BFA3A /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				C792966C717DA9B9F2A06CAB /* [CP] Embed Pods Frameworks */,
+				A5503AF3C61DD46A4FA9CE6A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,7 +203,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				C171C1C30777DA975AD07896 /* PrivacyInfo.xcprivacy in Resources */,
+				849DBD75B38353EF0C93654E /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,25 +247,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5CBB8D17023E2FDC21B1EA9B /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-BitriseReactNativeDetoxSample/expo-configure-project.sh\"\n";
-		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,7 +283,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BitriseReactNativeDetoxSample/Pods-BitriseReactNativeDetoxSample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C792966C717DA9B9F2A06CAB /* [CP] Embed Pods Frameworks */ = {
+		A5503AF3C61DD46A4FA9CE6A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -320,6 +301,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BitriseReactNativeDetoxSample/Pods-BitriseReactNativeDetoxSample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AA5B194884342ED1BA5BFA3A /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-BitriseReactNativeDetoxSample/expo-configure-project.sh\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -330,7 +330,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				89A934FADA7C4C9C9FDE656B /* noop-file.swift in Sources */,
+				28BFDB6538B8427E9BCE5B87 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,8 +360,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.bitrise.BitriseReactNativeDetoxSample";
-				PRODUCT_NAME = "BitriseReactNativeDetoxSample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitrise.BitriseReactNativeDetoxSample;
+				PRODUCT_NAME = BitriseReactNativeDetoxSample;
 				SWIFT_OBJC_BRIDGING_HEADER = "BitriseReactNativeDetoxSample/BitriseReactNativeDetoxSample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -388,8 +388,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.bitrise.BitriseReactNativeDetoxSample";
-				PRODUCT_NAME = "BitriseReactNativeDetoxSample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitrise.BitriseReactNativeDetoxSample;
+				PRODUCT_NAME = BitriseReactNativeDetoxSample;
 				SWIFT_OBJC_BRIDGING_HEADER = "BitriseReactNativeDetoxSample/BitriseReactNativeDetoxSample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

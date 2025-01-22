@@ -60,6 +60,11 @@ workflows:
     - git-clone@8: {}
     - cache-pull@2: {}
 
+    - java-setup@1:      
+        inputs:
+          java_version: "17"
+          java_source: "adoptium"
+
     - npm@1:
         inputs:
         - command: install
@@ -85,14 +90,23 @@ workflows:
         inputs:
         - project_location: $PROJECT_LOCATION
         - module: app
-        - variant: debug
-
+        - variant: debugAndroidTest
+        - build_type: debug
+    
     - script@1:
-        title: Detox Build Android
+        title: Start Metro Bundler
         inputs:
         - content: |-
             #!/bin/bash
-            npm run test:e2e:build:android
+            npx expo start &
+            sleep 10  # Give Metro some time to start up
+
+    - avd-manager@1:
+        inputs:
+        - api_level: "30"
+        - profile: pixel_4
+
+    - wait-for-android-emulator@1: {}
 
     - script@1:
         title: Detox Test Android
@@ -112,7 +126,6 @@ app:
   - PROJECT_LOCATION: android
   - BITRISE_APK_PATH: android/app/build/outputs/apk/debug/app-debug.apk
   - ANDROID_HOME: /opt/android-sdk
-  - JAVA_HOME: /usr/local/opt/openjdk@11
 
 meta:
   bitrise.io:

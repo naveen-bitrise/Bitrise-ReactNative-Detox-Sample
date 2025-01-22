@@ -15,17 +15,23 @@ describe('Todo App', () => {
         // If that doesn't work, you might need to add a testID to the close button
       } catch (error) {
         console.log('Could not find close button with label Close, trying different selector');
+        await device.shake()
+        //-After using device.openURL() we can use device.shake() to hide the DevMenu 
       }
       // Wait for app to load
       await new Promise(resolve => setTimeout(resolve, 3000));
+      console.log('App Launched')
     }, 60000);
   
     beforeEach(async () => {
+      console.log('Reloading app...');
       await device.reloadReactNative();
       await new Promise(resolve => setTimeout(resolve, 3000));
+      console.log('App reloaded');
     });
   
     it('should show welcome message', async () => {
+      console.log('Running first test...');
       await expect(element(by.id('welcome'))).toBeVisible();
     }, 60000);
   
