@@ -173,11 +173,11 @@ workflows:
   deploy_ota:
     steps:
     - restore-cache@2:
-        title: Restore asdf node cache
+        title: Restore node cache
         inputs:
         - key: asdf-node-mac-m1
     - script@1:
-        title: Install node versions using asdf
+        title: Install node versions
         inputs:
         - content: |-
             #!/usr/bin/env bash
@@ -196,14 +196,14 @@ workflows:
             npm install --global yarn@1.18.0
             envman add --key PATH --value $PATH
     - save-cache@1:
-        title: Save asdf node cache
+        title: Save node cache
         inputs:
         - paths: "/Users/vagrant/.asdf/installs/nodejs/"
         - verbose: 'true'
         - is_key_unique: 'true'
         - key: asdf-node-mac-m1
     - script@1:
-        title: Setup mobile project
+        title: Setup project
         inputs:
         - content: |-
             #!/usr/bin/env bash
@@ -263,11 +263,6 @@ workflows:
             jq '.expo.versionCode = '$VERSIONCODE'' app.json > app2.json && mv app2.json app.json
             jq '.expo.jsVersion = '$JSVERSION'' app.json > app2.json && mv app2.json app.json
             cat app.json
-    - restore-cache@2:
-        title: Restore Metro JS cache for android
-        inputs:
-        - key: daily-metro-cache-mac-android
-        - verbose: 'true'
     - script@1:
         title: OTA Update Android
         inputs:
@@ -280,45 +275,9 @@ workflows:
             # debug log
             set -x
             export SENTRY_PROPERTIES=./android/sentry.properties
-            echo "Releasing OTA update with rollout percentage: $OTA_ROLLOUT_PERCENTAGE"
-            NODE_OPTIONS=--max_old_space_size=10000 yarn expo export --platform android --no-minify --source-maps --clear
-            if [ -z "$OTA_ROLLOUT_PERCENTAGE" ] || [ "$OTA_ROLLOUT_PERCENTAGE" -eq 100 ]; then
-              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform android --skip-bundler
-            elif [ "$OTA_ROLLOUT_PERCENTAGE" -lt 100 ]; then
-              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform android --skip-bundler --rollout-percentage $OTA_ROLLOUT_PERCENTAGE
-            fi
-    - script@1:
-        title: Upload sentry sourcemaps for android
-        is_skippable: true
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
-            set -o pipefail
-            # debug log
-            set -x
-            export SENTRY_PROPERTIES=./android/sentry.properties
-            export SENTRY_AUTH_TOKEN="$SENTRY_CLI_ORG_AUTH_TOKEN"
-            sudo chown root . # workaround suggested by bitrise folks for npx which is used internally
-            yarn sentry-expo-upload-sourcemaps dist
-    - script@1:
-        title: Set OTA Android status
-        is_always_run: true
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
-            set -o pipefail
-            # debug log
-            set -x
-
-            envman add --key OTA_ANDROID_STATUS --value $BITRISE_BUILD_STATUS
+            eas update --auto --channel production --platform android --skip-bundler  
     - restore-cache@2:
-        title: Restore Metro JS cache for ios
+        title: Restore cache for ios
         inputs:
         - key: daily-metro-cache-mac-ios
         - verbose: 'true'
@@ -334,48 +293,7 @@ workflows:
             # debug log
             set -x
             export SENTRY_PROPERTIES=./ios/sentry.properties
-            echo "Releasing OTA update with rollout percentage: $OTA_ROLLOUT_PERCENTAGE"
-            NODE_OPTIONS=--max_old_space_size=10000 yarn expo export --platform ios --source-maps --clear
-            if [ -z "$OTA_ROLLOUT_PERCENTAGE" ] || [ "$OTA_ROLLOUT_PERCENTAGE" -eq 100 ]; then
-              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform ios --skip-bundler
-            elif [ "$OTA_ROLLOUT_PERCENTAGE" -lt 100 ]; then
-              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform ios --skip-bundler --rollout-percentage $OTA_ROLLOUT_PERCENTAGE
-            fi
-    - script@1:
-        title: Upload sentry sourcemaps for iOS
-        is_skippable: true
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
-            set -o pipefail
-            # debug log
-            set -x
-            export SENTRY_PROPERTIES=./ios/sentry.properties
-            export SENTRY_AUTH_TOKEN="$SENTRY_CLI_ORG_AUTH_TOKEN"
-            sudo chown root . # workaround suggested by bitrise folks for npx which is used internally
-            yarn sentry-expo-upload-sourcemaps dist
-    - script@1:
-        title: Set OTA iOS status
-        is_always_run: true
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            # fail if any commands fails
-            set -e
-            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
-            # set -o pipefail
-            # debug log
-            set -x
-            envman add --key OTA_IOS_STATUS --value $BITRISE_BUILD_STATUS
-    - share-pipeline-variable@1:
-        is_always_run: true
-        inputs:
-        - variables: |-
-            OTA_ANDROID_STATUS
-            OTA_IOS_STATUS
+            eas update --auto --channel production --platform ios --skip-bundler
     meta:
       bitrise.io:
         stack: linux-docker-android-22.04
