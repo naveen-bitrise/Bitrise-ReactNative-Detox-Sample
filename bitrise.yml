@@ -170,6 +170,216 @@ workflows:
 
     - cache-push@2: {}
 
+  deploy_ota:
+    steps:
+    - restore-cache@2:
+        title: Restore asdf node cache
+        inputs:
+        - key: asdf-node-mac-m1
+    - script@1:
+        title: Install node versions using asdf
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            # set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            # set -o pipefail
+            # debug log
+            # set -x
+
+            echo "legacy_version_file = yes" >> /Users/vagrant/.asdfrc
+            cat /Users/vagrant/.asdfrc
+            asdf install nodejs 18.13.0
+            asdf global nodejs 18.13.0
+            asdf reshim
+            npm install --global yarn@1.18.0
+            envman add --key PATH --value $PATH
+    - save-cache@1:
+        title: Save asdf node cache
+        inputs:
+        - paths: "/Users/vagrant/.asdf/installs/nodejs/"
+        - verbose: 'true'
+        - is_key_unique: 'true'
+        - key: asdf-node-mac-m1
+    - script@1:
+        title: Setup mobile project
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            cd ios
+            echo "defaults.url=https://sentry.io/" > sentry.properties
+            echo "defaults.org=people-center-inc" >> sentry.properties
+            echo "defaults.project=rippling-mobile-app" >> sentry.properties
+            echo "auth.token=$SENTRY_CLI_ORG_AUTH_TOKEN" >> sentry.properties
+            cd ..
+            cat ios/sentry.properties
+    - restore-cache@2:
+        title: Restore yarn cache
+        inputs:
+        - key: '{{ .OS }}-{{ .Arch }}-npm-cache-{{ checksum "yarn.lock" }}'
+    - yarn@0:
+        inputs:
+        - cache_local_deps: 'yes'
+    - script@1:
+        title: Setup Expo EAS CLI
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            npm install --global eas-cli
+    - script@1:
+        title: Increment Version
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            echo $VERSION
+            echo $VERSIONCODE
+            echo $JSVERSION
+
+            # update version versionCode and jsVersion in app.json
+            jq '.expo.version = "'$VERSION'"' app.json > app2.json && mv app2.json app.json
+            jq '.expo.runtimeVersion = "'$VERSION'"' app.json > app2.json && mv app2.json app.json
+            jq '.expo.versionCode = '$VERSIONCODE'' app.json > app2.json && mv app2.json app.json
+            jq '.expo.jsVersion = '$JSVERSION'' app.json > app2.json && mv app2.json app.json
+            cat app.json
+    - restore-cache@2:
+        title: Restore Metro JS cache for android
+        inputs:
+        - key: daily-metro-cache-mac-android
+        - verbose: 'true'
+    - script@1:
+        title: OTA Update Android
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+            export SENTRY_PROPERTIES=./android/sentry.properties
+            echo "Releasing OTA update with rollout percentage: $OTA_ROLLOUT_PERCENTAGE"
+            NODE_OPTIONS=--max_old_space_size=10000 yarn expo export --platform android --no-minify --source-maps --clear
+            if [ -z "$OTA_ROLLOUT_PERCENTAGE" ] || [ "$OTA_ROLLOUT_PERCENTAGE" -eq 100 ]; then
+              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform android --skip-bundler
+            elif [ "$OTA_ROLLOUT_PERCENTAGE" -lt 100 ]; then
+              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform android --skip-bundler --rollout-percentage $OTA_ROLLOUT_PERCENTAGE
+            fi
+    - script@1:
+        title: Upload sentry sourcemaps for android
+        is_skippable: true
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+            export SENTRY_PROPERTIES=./android/sentry.properties
+            export SENTRY_AUTH_TOKEN="$SENTRY_CLI_ORG_AUTH_TOKEN"
+            sudo chown root . # workaround suggested by bitrise folks for npx which is used internally
+            yarn sentry-expo-upload-sourcemaps dist
+    - script@1:
+        title: Set OTA Android status
+        is_always_run: true
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+
+            envman add --key OTA_ANDROID_STATUS --value $BITRISE_BUILD_STATUS
+    - restore-cache@2:
+        title: Restore Metro JS cache for ios
+        inputs:
+        - key: daily-metro-cache-mac-ios
+        - verbose: 'true'
+    - script@1:
+        title: OTA Update iOS
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+            export SENTRY_PROPERTIES=./ios/sentry.properties
+            echo "Releasing OTA update with rollout percentage: $OTA_ROLLOUT_PERCENTAGE"
+            NODE_OPTIONS=--max_old_space_size=10000 yarn expo export --platform ios --source-maps --clear
+            if [ -z "$OTA_ROLLOUT_PERCENTAGE" ] || [ "$OTA_ROLLOUT_PERCENTAGE" -eq 100 ]; then
+              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform ios --skip-bundler
+            elif [ "$OTA_ROLLOUT_PERCENTAGE" -lt 100 ]; then
+              NODE_OPTIONS=--max_old_space_size=10000 eas update --auto --channel production --platform ios --skip-bundler --rollout-percentage $OTA_ROLLOUT_PERCENTAGE
+            fi
+    - script@1:
+        title: Upload sentry sourcemaps for iOS
+        is_skippable: true
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            set -o pipefail
+            # debug log
+            set -x
+            export SENTRY_PROPERTIES=./ios/sentry.properties
+            export SENTRY_AUTH_TOKEN="$SENTRY_CLI_ORG_AUTH_TOKEN"
+            sudo chown root . # workaround suggested by bitrise folks for npx which is used internally
+            yarn sentry-expo-upload-sourcemaps dist
+    - script@1:
+        title: Set OTA iOS status
+        is_always_run: true
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully
+            # set -o pipefail
+            # debug log
+            set -x
+            envman add --key OTA_IOS_STATUS --value $BITRISE_BUILD_STATUS
+    - share-pipeline-variable@1:
+        is_always_run: true
+        inputs:
+        - variables: |-
+            OTA_ANDROID_STATUS
+            OTA_IOS_STATUS
+    meta:
+      bitrise.io:
+        stack: linux-docker-android-22.04
+  
   test:
     meta:
         bitrise.io:
