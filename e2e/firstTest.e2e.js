@@ -1,8 +1,13 @@
 describe('Todo App', () => {
     beforeAll(async () => {
+      //await detox.init()
       await device.launchApp({
         newInstance: true
       });
+      // Explicitly specify the package and activity name
+
+    
+     
       // Handle dev client screen
       await element(by.text('http://localhost:8081')).tap();
       // Handle dev menu welcome screen
