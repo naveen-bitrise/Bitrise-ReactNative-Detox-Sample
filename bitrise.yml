@@ -64,7 +64,7 @@ workflows:
             stack: linux-docker-android-22.04
     steps:
     - git-clone@8: {}
-    - cache-pull@2: {}
+    - restore-gradle-cache@2: {}
 
     - set-java-version@1:
         inputs:
@@ -168,7 +168,7 @@ workflows:
             #!/bin/bash
             npm run test:e2e:android
 
-    - cache-push@2: {}
+    - save-gradle-cache@1: {}
 
   deploy_ota:
     steps:
