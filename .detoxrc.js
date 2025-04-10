@@ -16,7 +16,7 @@ module.exports = {
     'ios.debug': {
       type: 'ios.app',
       binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/BitriseReactNativeDetoxSample.app',
-      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug --stacktrace',
+      build: 'xcodebuild -workspace ios/BitriseReactNativeDetoxSample.xcworkspace -scheme BitriseReactNativeDetoxSample -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
     },
     'android.debug': {
       type: 'android.apk',

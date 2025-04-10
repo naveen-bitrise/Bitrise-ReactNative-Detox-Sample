@@ -47,7 +47,21 @@ workflows:
         inputs:
         - content: |-
             #!/bin/bash
-            npm run test:e2e:build:ios
+            # Create log directory
+            mkdir -p "$BITRISE_DEPLOY_DIR/build_logs"
+            npm run test:e2e:build:ios | tee "$BITRISE_DEPLOY_DIR/build_logs/xcode_buildlog.txt"
+          
+            # Save the exit code (important!)
+            BUILD_EXIT_CODE=${PIPESTATUS[0]}
+
+            # Compress the log if it's large
+            cd "$BITRISE_DEPLOY_DIR"
+            gzip build_logs/xcode_buildlog.txt
+
+            echo "Build logs saved to artifacts"
+
+            # Exit with the original npm command exit code
+            exit $BUILD_EXIT_CODE 
 
     - script@1:
         title: Detox Test iOS
