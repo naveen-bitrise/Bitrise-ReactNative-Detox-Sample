@@ -62,7 +62,7 @@ workflows:
 
             # Compress the log if it's large
             cd "$BITRISE_DEPLOY_DIR"
-            gzip build_logs/xcode_buildlog.txt
+            gzip build_logs
 
             echo "Build logs saved to artifacts"
 
