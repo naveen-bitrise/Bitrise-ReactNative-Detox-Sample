@@ -72,6 +72,8 @@ workflows:
 
     - cache-push@2: {}
 
+    - deploy-to-bitrise-io@2: {}
+
   android:
     meta:
         bitrise.io:
