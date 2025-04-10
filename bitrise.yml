@@ -47,8 +47,14 @@ workflows:
         inputs:
         - content: |-
             #!/bin/bash
+            echo "creating dir"
             # Create log directory
             mkdir -p "$BITRISE_DEPLOY_DIR/build_logs"
+            echo "dir created"
+
+            ls -ls $BITRISE_DEPLOY_DIR
+
+
             npm run test:e2e:build:ios | tee "$BITRISE_DEPLOY_DIR/build_logs/xcode_buildlog.txt"
           
             # Save the exit code (important!)
