@@ -86,7 +86,7 @@ workflows:
   android-basic:
     meta:
         bitrise.io:
-            stack: osx-xcode-16.2.x
+            stack: linux-docker-android-22.04
     steps:
     - git-clone@8: {}
 
