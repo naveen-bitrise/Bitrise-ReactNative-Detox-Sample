@@ -101,13 +101,6 @@ workflows:
         - command: install -g expo-cli
 
     - script@1:
-        title: Install CocoaPods
-        inputs:
-        - content: |-
-            #!/bin/bash
-            cd ios && pod install
-
-    - script@1:
         title: Create Expo Dev Build
         inputs:
         - content: |-
