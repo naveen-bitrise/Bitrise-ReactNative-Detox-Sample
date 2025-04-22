@@ -83,6 +83,86 @@ workflows:
 
     - deploy-to-bitrise-io@2: {}
 
+  android-basic:
+    meta:
+        bitrise.io:
+            stack: osx-xcode-16.2.x
+    steps:
+    - git-clone@8: {}
+
+    - npm@1:
+        inputs:
+        - command: install
+        title: npm install
+
+    - npm@1:
+        title: Install Expo CLI
+        inputs:
+        - command: install -g expo-cli
+
+    - script@1:
+        title: Install CocoaPods
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd ios && pod install
+
+    - script@1:
+        title: Create Expo Dev Build
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npx expo prebuild
+
+    - script@1:
+        title: Start Metro Bundler
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npx expo start &
+            sleep 10  # Give Metro some time to start up
+    - activate-build-cache-for-gradle@2: {}
+    - restore-gradle-cache@2: {}        
+    - script@1:
+        title: Detox Build android
+        inputs:
+        - content: |-
+            #!/bin/bash
+            echo "creating dir"
+            # Create log directory
+            mkdir -p "$BITRISE_DEPLOY_DIR/build_logs"
+            echo "dir created"
+
+            ls -ls $BITRISE_DEPLOY_DIR
+
+
+            npm run test:e2e:build:android > "$BITRISE_DEPLOY_DIR/build_logs/gradle_buildlog.txt"
+          
+            # Save the exit code (important!)
+            #BUILD_EXIT_CODE=${PIPESTATUS[0]}
+
+            # Compress the log if it's large
+            cd "$BITRISE_DEPLOY_DIR"
+            zip -r build_logs.zip build_logs
+
+            echo "Build logs saved to artifacts"
+
+            ls -ls $BITRISE_DEPLOY_DIR
+            ls -ls $BITRISE_DEPLOY_DIR/build_logs
+
+            # Exit with the original npm command exit code
+            #exit $BUILD_EXIT_CODE 
+
+    - script@1:
+        title: Detox Test Android
+        inputs:
+        - content: |-
+            #!/bin/bash
+            npm run test:e2e:android
+
+    - save-gradle-cache@1: {}
+    - deploy-to-bitrise-io@2: {}
+
   android:
     meta:
         bitrise.io:
