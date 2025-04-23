@@ -129,7 +129,8 @@ workflows:
             ls -ls $BITRISE_DEPLOY_DIR
 
 
-            npm run test:e2e:build:android > "$BITRISE_DEPLOY_DIR/build_logs/gradle_buildlog.txt"
+            npm run test:e2e:build:android:debug > "$BITRISE_DEPLOY_DIR/build_logs/gradle_buildlog_debug.txt"
+            npm run test:e2e:build:android:test > "$BITRISE_DEPLOY_DIR/build_logs/gradle_buildlog_test.txt"
           
             # Save the exit code (important!)
             #BUILD_EXIT_CODE=${PIPESTATUS[0]}
