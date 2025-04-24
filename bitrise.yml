@@ -75,7 +75,6 @@ workflows:
     
     - script@1:
         title: Detox Build iOS Simple
-        run_if: false
         inputs:
         - content: |-
             #!/bin/bash
