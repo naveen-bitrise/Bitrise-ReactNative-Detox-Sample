@@ -44,6 +44,7 @@ workflows:
             
     - script@1:
         title: Detox Build iOS
+        run_if: false
         inputs:
         - content: |-
             #!/bin/bash
@@ -71,6 +72,16 @@ workflows:
 
             # Exit with the original npm command exit code
             #exit $BUILD_EXIT_CODE 
+    
+    - script@1:
+        title: Detox Build iOS Simple
+        run_if: false
+        inputs:
+        - content: |-
+            #!/bin/bash
+            echo "creating dir"
+            
+            npm run test:e2e:build:ios 
 
     - script@1:
         title: Detox Test iOS
