@@ -16,7 +16,7 @@ module.exports = {
     'ios.debug': {
       type: 'ios.app',
       binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/BitriseReactNativeDetoxSample.app',
-      build: 'xcodebuild -workspace ios/BitriseReactNativeDetoxSample.xcworkspace -scheme BitriseReactNativeDetoxSample -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
+      build: 'xcodebuild -workspace ios/BitriseReactNativeDetoxSample.xcworkspace -scheme BitriseReactNativeDetoxSample -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build | xcpretty',
     },
     'android.debug': {
       type: 'android.apk',
